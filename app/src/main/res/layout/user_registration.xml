@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:background="#E5FFCC">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <ImageView android:src="@drawable/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView android:id="@+id/app_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="SMART WATERING SYSTEM"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:textSize="25dip"
+            android:textStyle="bold"/>
+
+        <TextView android:id="@+id/text_user_registration"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="User Registration"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:textSize="25dip"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/label_username"
+                android:layout_width="110dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:text="Username:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:paddingTop="10dp">
+            </TextView>
+
+            <EditText
+                android:id="@+id/text_username"
+                android:layout_width="215dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="100dp"
+                android:layout_marginEnd="27dp"
+                android:layout_marginRight="27dp"
+                android:inputType="text"
+                android:hint="Username"
+                android:textColorHint="@drawable/selector"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/label_password"
+                android:layout_width="110dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:text="Password:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:paddingTop="10dp">
+            </TextView>
+
+            <EditText
+                android:id="@+id/text_password"
+                android:layout_width="215dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="100dp"
+                android:layout_marginEnd="27dp"
+                android:layout_marginRight="27dp"
+                android:inputType="text"
+                android:hint="Password"
+                android:textColorHint="@drawable/selector"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/button_register"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:padding="12dp"
+                android:text="Register"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/button_cancel"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:padding="12dp"
+                android:text="Cancel"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
