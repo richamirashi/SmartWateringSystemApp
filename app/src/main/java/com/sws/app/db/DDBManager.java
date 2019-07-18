@@ -4,11 +4,15 @@ import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
+import com.amazonaws.regions.Region;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.regions.Region;
 import com.sws.app.commons.HashUtils;
+import com.sws.app.db.model.DeviceItem;
 import com.sws.app.db.model.UserItem;
+
+import java.util.List;
 
 /**
  * Class provides functions to access dynamodb database
@@ -38,6 +42,13 @@ public class DDBManager {
         ddbMapper = DynamoDBMapper.builder().dynamoDBClient(ddbClient).build();
     }
 
+    /**
+     * User registration
+     * @param username
+     * @param password
+     * @throws UserAlreadyExistsException
+     * @throws UserCreationException
+     */
     public void registerUser(String username, String password) throws UserAlreadyExistsException, UserCreationException {
         // Construct object
         UserItem userItem = new UserItem();
@@ -68,7 +79,7 @@ public class DDBManager {
             return false;
         }
 
-        if(loadedUserItem.getPassword().equals(HashUtils.getHash(password))){
+        if (loadedUserItem.getPassword().equals(HashUtils.getHash(password))) {
             return true;
         }
         return false;
@@ -79,6 +90,67 @@ public class DDBManager {
 
     public class UserCreationException extends Exception {
         public UserCreationException(Exception e) {
+            super(e);
+        }
+    }
+
+    /**
+     * Device Registration handler
+     *
+     * @param username
+     * @param deviceId
+     * @param deviceName
+     * @throws DeviceAlreadyExistsException
+     * @throws DeviceCreationException
+     */
+    public void registerDevice(String username, String deviceId, String deviceName) throws DeviceAlreadyExistsException, DeviceCreationException {
+        // Construct object
+        DeviceItem deviceItem = new DeviceItem();
+        deviceItem.setUsername(username);
+        deviceItem.setDeviceId(deviceId);
+
+        // Check if device exists
+        if (ddbMapper.load(deviceItem) != null) {
+            throw new DeviceAlreadyExistsException();
+        }
+
+        // add record to database
+        deviceItem.setDeviceName(deviceName);
+        try {
+            ddbMapper.save(deviceItem);
+        } catch (Exception e) {
+            throw new DeviceCreationException(e);
+        }
+    }
+
+    public List<DeviceItem> listDevices(String username) throws DeviceListException {
+        // Construct object
+        List<DeviceItem> devicesList;
+        DeviceItem deviceItem = new DeviceItem();
+        deviceItem.setUsername(username);
+        DynamoDBQueryExpression<DeviceItem> queryExpression = new DynamoDBQueryExpression<DeviceItem>()
+                .withHashKeyValues(deviceItem);
+
+        try {
+            devicesList = ddbMapper.query(DeviceItem.class, queryExpression);
+        } catch (Exception e) {
+            throw new DeviceListException(e);
+        }
+
+        return devicesList;
+    }
+
+    public class DeviceAlreadyExistsException extends Exception {
+    }
+
+    public class DeviceCreationException extends Exception {
+        public DeviceCreationException(Exception e) {
+            super(e);
+        }
+    }
+
+    public class DeviceListException extends Exception {
+        public DeviceListException(Exception e) {
             super(e);
         }
     }

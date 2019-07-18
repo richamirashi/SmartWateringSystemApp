@@ -82,7 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                     resultMessage = "Login Successful !";
                     Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
 
-                    // TODO: Add intent to device list
+                    Intent intent = new Intent(LoginActivity.this, DevicesListActivity.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
                     return;
                 } else {
                     resultMessage = "Username or password is incorrect !";
