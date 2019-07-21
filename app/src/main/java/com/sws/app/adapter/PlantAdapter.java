@@ -7,28 +7,29 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sws.app.R;
-import com.sws.app.db.model.DeviceItem;
+import com.sws.app.db.model.PlantItem;
 import com.sws.app.listener.ItemClickListener;
 
 import java.util.List;
 
-public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DevicesViewHolder> {
+public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantsViewHolder> {
 
-    private List<DeviceItem> deviceItemList;
+    private List<PlantItem> plantItemList;
+
     private ItemClickListener mClickListener;
 
-    public DevicesAdapter(List<DeviceItem> deviceItemList) {
-        this.deviceItemList = deviceItemList;
+    public PlantAdapter(List<PlantItem> plantItemList) {
+        this.plantItemList = plantItemList;
     }
 
-    public class DevicesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class PlantsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView deviceView;
+        public TextView plantView;
 
-        public DevicesViewHolder(View deviceView){
-            super(deviceView);
-            this.deviceView = deviceView.findViewById(R.id.tv_recyclerView);
-            deviceView.setOnClickListener(this);
+        public PlantsViewHolder(View plantView){
+            super(plantView);
+            this.plantView = plantView.findViewById(R.id.tv_recyclerView);
+            plantView.setOnClickListener(this);
         }
 
         @Override
@@ -42,17 +43,17 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DevicesV
      * Create new views (invoked by the layout manager)
      */
     @Override
-    public DevicesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlantsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_row, parent, false);
-        return new DevicesViewHolder(view);
+        return new PlantsViewHolder(view);
     }
 
     /**
      * Replace the contents of a view (invoked by the layout manager)
      */
     @Override
-    public void onBindViewHolder(DevicesViewHolder holder, int position) {
-        holder.deviceView.setText(deviceItemList.get(position).getDeviceName());
+    public void onBindViewHolder(PlantsViewHolder holder, int position) {
+        holder.plantView.setText(plantItemList.get(position).getPlantName());
     }
 
     /**
@@ -60,11 +61,11 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DevicesV
      */
     @Override
     public int getItemCount() {
-        return deviceItemList.size();
+        return plantItemList.size();
     }
 
-    public DeviceItem getDevice(int index) {
-        return deviceItemList.get(index);
+    public PlantItem getPlant(int index) {
+        return plantItemList.get(index);
     }
 
     /**

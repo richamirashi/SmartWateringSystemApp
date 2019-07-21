@@ -10,6 +10,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.sws.app.commons.HashUtils;
 import com.sws.app.db.model.DeviceItem;
+import com.sws.app.db.model.PlantItem;
 import com.sws.app.db.model.UserItem;
 
 import java.util.List;
@@ -151,6 +152,64 @@ public class DDBManager {
 
     public class DeviceListException extends Exception {
         public DeviceListException(Exception e) {
+            super(e);
+        }
+    }
+
+    /**
+     * Plant registration handler
+     */
+    public void registerPlant(String deviceId, String plantPort, String plantName, String plantType, String plantDescription)
+            throws PlantAlreadyExistsException, PlantCreationException {
+        // Construct object
+        PlantItem plantItem = new PlantItem();
+        plantItem.setDeviceId(deviceId);
+        plantItem.setPlantPort(plantPort);
+
+        // Check if plant exists
+        if (ddbMapper.load(plantItem) != null) {
+            throw new PlantAlreadyExistsException();
+        }
+
+        // add record to database
+        plantItem.setPlantName(plantName);
+        plantItem.setType(plantType);
+        plantItem.setDescription(plantDescription);
+        try {
+            ddbMapper.save(plantItem);
+        } catch (Exception e) {
+            throw new PlantCreationException(e);
+        }
+    }
+
+    public List<PlantItem> listPlants(String deviceId) throws PlantListException {
+        // Construct object
+        List<PlantItem> plantsList;
+        PlantItem plantItem = new PlantItem();
+        plantItem.setDeviceId(deviceId);
+        DynamoDBQueryExpression<PlantItem> queryExpression = new DynamoDBQueryExpression<PlantItem>()
+                .withHashKeyValues(plantItem);
+
+        try {
+            plantsList = ddbMapper.query(PlantItem.class, queryExpression);
+        } catch (Exception e) {
+            throw new PlantListException(e);
+        }
+
+        return plantsList;
+    }
+
+    public class PlantAlreadyExistsException extends Exception {
+    }
+
+    public class PlantCreationException extends Exception {
+        public PlantCreationException(Exception e) {
+            super(e);
+        }
+    }
+
+    public class PlantListException extends Exception {
+        public PlantListException(Exception e) {
             super(e);
         }
     }

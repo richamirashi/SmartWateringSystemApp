@@ -31,6 +31,10 @@
 
         <activity android:name=".activity.DevicesListActivity" />
         <activity android:name=".activity.DeviceRegistrationActivity" />
+        <activity android:name=".activity.PlantsListActivity" />
+        <activity android:name=".activity.PlantRegistrationActivity" />
+        <activity android:name=".activity.PlantInfoActivity" />
+        <activity android:name=".activity.WaterPlantActivity"/>
     </application>
 
 </manifest>

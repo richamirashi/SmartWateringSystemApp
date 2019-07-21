@@ -7,4 +7,16 @@
     <string name="action_settings">Settings</string>
 
     <string name="link_signup"><u>No account yet? Create one</u></string>
+
+    <string-array name="plant_port_array">
+        <item>Plant Port 1</item>
+        <item>Plant Port 2</item>
+    </string-array>
+
+    <string-array name="plant_type_array">
+        <item>Very Dry Soil</item>
+        <item>Dry Soil</item>
+        <item>Moist Soil</item>
+        <item>Wet Soil</item>
+    </string-array>
 </resources>

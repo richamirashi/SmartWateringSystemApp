@@ -13,7 +13,7 @@ public class PlantItem {
     private String plantName;
     private String type;
     private String description;
-    private int moistureStat;
+    private String moistureStat;
     private String lastWatered;
     private String lastScheduled;
 
@@ -63,11 +63,11 @@ public class PlantItem {
     }
 
     @DynamoDBAttribute(attributeName = "moistureStat")
-    public int getMoistureStat() {
+    public String getMoistureStat() {
         return moistureStat;
     }
 
-    public void setMoistureStat(int moistureStat) {
+    public void setMoistureStat(String moistureStat) {
         this.moistureStat = moistureStat;
     }
 

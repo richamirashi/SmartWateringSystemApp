@@ -8,50 +8,59 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sws.app.R;
-import com.sws.app.adapter.DevicesAdapter;
+import com.sws.app.adapter.PlantAdapter;
 import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
-import com.sws.app.db.model.DeviceItem;
+import com.sws.app.db.model.PlantItem;
 import com.sws.app.listener.ItemClickListener;
 
 import java.util.List;
 
-public class DevicesListActivity extends AppCompatActivity implements ItemClickListener {
+public class PlantsListActivity extends AppCompatActivity implements ItemClickListener {
 
-    private static final String TAG_NAME = "DevicesListActivity";
+    private static final String TAG_NAME = "PlantsListActivity";
 
-    DevicesAdapter devicesAdapter;
+    PlantAdapter plantAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG_NAME, "DevicesListActivity.onCreate called ");
-        setContentView(R.layout.devices_list);
+        Log.i(TAG_NAME, "PlantsListActivity.onCreate called ");
+        setContentView(R.layout.plants_list);
 
-        Button registerButton = (Button) this.findViewById(R.id.button_device_register);
+        Session session = Session.fromJson(getIntent().getStringExtra("session"));
+
+        TextView deviceIDTextView = findViewById(R.id.tv_deviceid);
+        deviceIDTextView.setText(session.getDeviceItem().getDeviceId());
+
+        TextView deviceNameTextView = findViewById(R.id.tv_device_name);
+        deviceNameTextView.setText(session.getDeviceItem().getDeviceName());
+
+        Button registerButton = (Button) this.findViewById(R.id.button_plant_register);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG_NAME, "Inside listener function for Register Device button");
-                Intent intent = new Intent(DevicesListActivity.this, DeviceRegistrationActivity.class);
+                Log.i(TAG_NAME, "Inside listener function for Register Plant button");
+                Intent intent = new Intent(PlantsListActivity.this, PlantRegistrationActivity.class);
                 Session session = Session.fromJson(getIntent().getStringExtra("session"));
-                Log.i(TAG_NAME, "Register Device Session: " + session.toJson());
+                Log.i(TAG_NAME, "Register Plant Session: " + session.toJson());
                 intent.putExtra("session", session.toJson());
                 startActivity(intent);
             }
         });
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
+        String deviceId = session.getDeviceItem().getDeviceId();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_devices);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_plants);
         recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -60,23 +69,22 @@ public class DevicesListActivity extends AppCompatActivity implements ItemClickL
         // specify an adapter (see also next example)
         try {
             DDBManager ddbManager = DDBManager.getInstance();
-            List<DeviceItem> deviceItemList = ddbManager.listDevices(session.getUsername());
-            devicesAdapter = new DevicesAdapter(deviceItemList);
-            devicesAdapter.setClickListener(this);
-            recyclerView.setAdapter(devicesAdapter);
-        } catch (DDBManager.DeviceListException e) {
-            String resultMessage = "Error occurred while fetching the device list !";
+            List<PlantItem> plantItemList = ddbManager.listPlants(deviceId);
+            plantAdapter = new PlantAdapter(plantItemList);
+            plantAdapter.setClickListener(this);
+            recyclerView.setAdapter(plantAdapter);
+        } catch (DDBManager.PlantListException e) {
+            String resultMessage = "Error occurred while fetching the plant list !";
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
-        Intent intent = new Intent(DevicesListActivity.this, PlantsListActivity.class);
-        Session newSession = new Session(session.getUsername(), devicesAdapter.getDevice(position));
+        Intent intent = new Intent(PlantsListActivity.this, PlantInfoActivity.class);
+        Session newSession = new Session(session.getUsername(), session.getDeviceItem(), plantAdapter.getPlant(position));
         Log.i(TAG_NAME, "On Device click Session: " + newSession.toJson());
         intent.putExtra("session", newSession.toJson());
         startActivity(intent);

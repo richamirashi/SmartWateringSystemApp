@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main"
+    android:background="#E5FFCC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Device Details"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:textSize="25dip"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="135dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:text="Device ID:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:gravity="left" />
+
+            <TextView
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:id="@+id/tv_deviceid"
+                android:layout_marginLeft="15dp"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:gravity="left" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="135dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:text="Device Name:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:gravity="left" />
+
+            <TextView
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:id="@+id/tv_device_name"
+                android:layout_marginLeft="15dp"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:gravity="left" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Registered Plants"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:textSize="25dip"
+            android:textStyle="bold"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:id="@+id/rv_plants">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_plant_register"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            android:text="Register Plant"/>
+
+    </LinearLayout>
+
+</ScrollView>

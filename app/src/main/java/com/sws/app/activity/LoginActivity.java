@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sws.app.R;
+import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 
 public class LoginActivity extends AppCompatActivity {
@@ -83,7 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(LoginActivity.this, DevicesListActivity.class);
-                    intent.putExtra("username", username);
+                    Session session = new Session(username);
+                    intent.putExtra("session", session.toJson());
                     startActivity(intent);
                     return;
                 } else {

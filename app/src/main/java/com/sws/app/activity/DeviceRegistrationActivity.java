@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sws.app.R;
+import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 
 public class DeviceRegistrationActivity extends AppCompatActivity {
@@ -26,9 +27,7 @@ public class DeviceRegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG_NAME, "Inside listener function for deviceRegister button");
-                // get the username from the previous i.e. DevicesListActivity activity
-                String username = getIntent().getStringExtra("username");
-                registerDevice(username);
+                registerDevice();
             }
         });
 
@@ -38,15 +37,19 @@ public class DeviceRegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG_NAME, "onClick: inside listener function for cancel");
                 Intent intent = new Intent(DeviceRegistrationActivity.this, DevicesListActivity.class);
-                String username = getIntent().getStringExtra("username");
-                intent.putExtra("username", username);
+                Session session = Session.fromJson(getIntent().getStringExtra("session"));
+                Log.i(TAG_NAME, "Cancel Session: " + session.toJson());
+                intent.putExtra("session", session.toJson());
                 startActivity(intent);
             }
         });
     }
 
-    private void registerDevice(String username){
+    private void registerDevice(){
         String resultMessage;
+        Session session = Session.fromJson(getIntent().getStringExtra("session"));
+        Log.i(TAG_NAME, "registerDevice Session: " + session.toJson());
+        String username = session.getUsername();
         String deviceId = ((EditText)findViewById(R.id.text_device_id)).getText().toString();
         String deviceName = ((EditText)findViewById(R.id.text_device_name)).getText().toString();
 
@@ -65,7 +68,7 @@ public class DeviceRegistrationActivity extends AppCompatActivity {
             resultMessage = "Device registered !";
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(DeviceRegistrationActivity.this, DevicesListActivity.class);
-            intent.putExtra("username", username);
+            intent.putExtra("session", session.toJson());
             startActivity(intent);
         } catch (DDBManager.DeviceAlreadyExistsException e) {
             resultMessage = "Device already exists !";
