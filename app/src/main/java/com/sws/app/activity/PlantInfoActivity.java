@@ -48,7 +48,7 @@ public class PlantInfoActivity extends AppCompatActivity {
             lastWateredTextView.setText(lastWatered);
         }
 
-        String lastSchedule = session.getPlantItem().getLastScheduled();
+        String lastSchedule = session.getPlantItem().getScheduledStartTime();
         TextView lastScheduleTextView = findViewById(R.id.tv_schedule);
         if(lastSchedule != null){
             lastScheduleTextView.setText(lastSchedule);
@@ -66,6 +66,32 @@ public class PlantInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG_NAME, "Inside listener function for Water Plant button");
                 Intent intent = new Intent(PlantInfoActivity.this, WaterPlantActivity.class);
+                Session session = Session.fromJson(getIntent().getStringExtra("session"));
+                Log.i(TAG_NAME, "Session: " + session.toJson());
+                intent.putExtra("session", session.toJson());
+                startActivity(intent);
+            }
+        });
+
+        Button setScheduleButton = (Button) this.findViewById(R.id.button_set_schedule);
+        setScheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG_NAME, "Inside listener function for Set Schedule button");
+                Intent intent = new Intent(PlantInfoActivity.this, SetScheduleActivity.class);
+                Session session = Session.fromJson(getIntent().getStringExtra("session"));
+                Log.i(TAG_NAME, "Session: " + session.toJson());
+                intent.putExtra("session", session.toJson());
+                startActivity(intent);
+            }
+        });
+
+        Button getMoistureStatsButton = (Button) this.findViewById(R.id.button_get_moisture_stats);
+        getMoistureStatsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG_NAME, "Inside listener function for Get Moisture Stats button");
+                Intent intent = new Intent(PlantInfoActivity.this, SoilMoistureStatsActivity.class);
                 Session session = Session.fromJson(getIntent().getStringExtra("session"));
                 Log.i(TAG_NAME, "Session: " + session.toJson());
                 intent.putExtra("session", session.toJson());

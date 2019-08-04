@@ -15,7 +15,8 @@ public class PlantItem {
     private String description;
     private String moistureStat;
     private String lastWatered;
-    private String lastScheduled;
+    private String scheduledStartTime;
+    private String frequency;
 
     @DynamoDBHashKey(attributeName = "deviceId")
     public String getDeviceId() {
@@ -80,12 +81,22 @@ public class PlantItem {
         this.lastWatered = lastWatered;
     }
 
-    @DynamoDBAttribute(attributeName = "lastScheduled")
-    public String getLastScheduled() {
-        return lastScheduled;
+    @DynamoDBAttribute(attributeName = "scheduledStartTime")
+    public String getScheduledStartTime() {
+        return scheduledStartTime;
     }
 
-    public void setLastScheduled(String lastScheduled) {
-        this.lastScheduled = lastScheduled;
+    public void setScheduledStartTime(String scheduledStartTime) {
+        this.scheduledStartTime = scheduledStartTime;
     }
+
+    @DynamoDBAttribute(attributeName = "scheduledFrequency")
+    public String getScheduledFrequency() {
+        return frequency;
+    }
+
+    public void setScheduledFrequency(String frequency) {
+        this.frequency = frequency;
+    }
+
 }

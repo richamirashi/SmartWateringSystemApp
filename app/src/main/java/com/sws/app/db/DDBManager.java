@@ -208,9 +208,48 @@ public class DDBManager {
         }
     }
 
+    public class PlantUpdateException extends Exception {
+        public PlantUpdateException(Exception e) {
+            super(e);
+        }
+    }
+
     public class PlantListException extends Exception {
         public PlantListException(Exception e) {
             super(e);
         }
     }
+
+    public class PlantDoesNotExistException extends Exception {
+    }
+
+    public void setSchedule(String deviceId, String plantPort, String startDateTime, String frequency)
+        throws PlantUpdateException, PlantDoesNotExistException {
+
+        PlantItem plantItem = new PlantItem();
+        plantItem.setDeviceId(deviceId);
+        plantItem.setPlantPort(plantPort);
+
+        try {
+            // get object from database
+            plantItem = ddbMapper.load(plantItem);
+
+            // Check if plant exists
+            if (plantItem == null) {
+                throw new PlantDoesNotExistException();
+            }
+
+            plantItem.setScheduledStartTime(startDateTime);
+            plantItem.setScheduledFrequency(frequency);
+
+            // save object to database
+            ddbMapper.save(plantItem);
+
+        } catch (PlantDoesNotExistException e) {
+            throw e;
+        } catch(Exception e) {
+            throw new PlantUpdateException(e);
+        }
+    }
+
 }

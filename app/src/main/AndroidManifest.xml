@@ -35,6 +35,8 @@
         <activity android:name=".activity.PlantRegistrationActivity" />
         <activity android:name=".activity.PlantInfoActivity" />
         <activity android:name=".activity.WaterPlantActivity"/>
+        <activity android:name=".activity.SetScheduleActivity"/>
+        <activity android:name=".activity.SoilMoistureStatsActivity"/>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttClientStatusCallback;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttManager;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttQos;
+import com.sws.app.iot.message.CreateScheduleRequest;
 import com.sws.app.iot.message.WaterPlantRequest;
 
 /**
@@ -80,9 +81,18 @@ public class IotManager {
         mqttManager.publishString(waterPlantRequestJson, waterPlantTopicRequest, QOS);
         Log.i(LOG_TAG, "Water plant request sent | Topic= " + waterPlantTopicRequest + " | Request= " + waterPlantRequestJson);
 
-        // Wait for response
+    }
 
-        // Update database
+    public void createSchedule(String deviceId, String plantPort, String startDateTime, String frequency, String duration) {
+
+        Log.i(LOG_TAG, "Water plant function called");
+
+        // Send request to Iot to water plant
+        CreateScheduleRequest createScheduleRequest = new CreateScheduleRequest(plantPort, startDateTime, frequency, duration);
+        String createScheduleRequestJson = createScheduleRequest.toJson();
+        String createScheduleTopicRequest = Topic.createScheduleTopic(deviceId, Topic.REQUEST);
+        mqttManager.publishString(createScheduleRequestJson, createScheduleTopicRequest, QOS);
+        Log.i(LOG_TAG, "Create Schedule request sent | Topic= " + createScheduleTopicRequest + " | Request= " + createScheduleRequestJson);
 
     }
 }

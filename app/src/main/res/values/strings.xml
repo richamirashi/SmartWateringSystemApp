@@ -19,4 +19,18 @@
         <item>Moist Soil</item>
         <item>Wet Soil</item>
     </string-array>
+
+    <string name="freq_1_day">1 Day</string>
+    <string name="freq_2_day">2 Day</string>
+    <string name="freq_3_day">3 Day</string>
+    <string name="freq_weekly">Weekly</string>
+    <string name="freq_monthly">Monthly</string>
+
+    <string-array name="schedule_frequency_array">
+        <item>@string/freq_1_day</item>
+        <item>@string/freq_2_day</item>
+        <item>@string/freq_3_day</item>
+        <item>@string/freq_weekly</item>
+        <item>@string/freq_monthly</item>
+    </string-array>
 </resources>
