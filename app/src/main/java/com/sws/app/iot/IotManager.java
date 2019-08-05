@@ -9,6 +9,7 @@ import com.amazonaws.mobileconnectors.iot.AWSIotMqttClientStatusCallback;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttManager;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttQos;
 import com.sws.app.iot.message.CreateScheduleRequest;
+import com.sws.app.iot.message.GetSoilMoistureStatsRequest;
 import com.sws.app.iot.message.WaterPlantRequest;
 
 /**
@@ -94,5 +95,18 @@ public class IotManager {
         mqttManager.publishString(createScheduleRequestJson, createScheduleTopicRequest, QOS);
         Log.i(LOG_TAG, "Create Schedule request sent | Topic= " + createScheduleTopicRequest + " | Request= " + createScheduleRequestJson);
 
+    }
+
+    public void requestDeviceForSoilMoistureStat(String deviceId, String plantPort) {
+
+        Log.i(LOG_TAG, "Request device for soil moisture stat");
+
+        // Send request to Iot to return soil moisture stat
+        GetSoilMoistureStatsRequest getSoilMoistureStatsRequest = new GetSoilMoistureStatsRequest(plantPort);
+        String getSoilMoistureStatsRequestJson = getSoilMoistureStatsRequest.toJson();
+        String getSoilMoistureStatsRequestTopic = Topic.moistureStatsTopic(deviceId, Topic.REQUEST);
+        mqttManager.publishString(getSoilMoistureStatsRequestJson, getSoilMoistureStatsRequestTopic, QOS);
+        Log.i(LOG_TAG, "Get Soil moisture request request sent | Topic= " + getSoilMoistureStatsRequestTopic +
+                " | Request= " + getSoilMoistureStatsRequestJson);
     }
 }

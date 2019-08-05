@@ -199,6 +199,25 @@ public class DDBManager {
         return plantsList;
     }
 
+    public PlantItem getPlantItem(String deviceId, String plantPort) throws PlantGetException {
+        PlantItem plantItemResult;
+        PlantItem plantItem = new PlantItem();
+        plantItem.setDeviceId(deviceId);
+        plantItem.setPlantPort(plantPort);
+        try {
+            plantItemResult = ddbMapper.load(plantItem);
+        } catch (Exception e) {
+            throw new PlantGetException(e);
+        }
+
+        if(plantItemResult == null) {
+            throw new PlantGetException("plantItemResult was null");
+        }
+
+        return plantItemResult;
+    }
+
+
     public class PlantAlreadyExistsException extends Exception {
     }
 
@@ -217,6 +236,16 @@ public class DDBManager {
     public class PlantListException extends Exception {
         public PlantListException(Exception e) {
             super(e);
+        }
+    }
+
+    public class PlantGetException extends Exception {
+        public PlantGetException(Exception e) {
+            super(e);
+        }
+
+        public PlantGetException(String message) {
+            super(message);
         }
     }
 

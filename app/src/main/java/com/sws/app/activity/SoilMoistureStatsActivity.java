@@ -14,6 +14,7 @@ import com.sws.app.R;
 import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 import com.sws.app.db.model.DeviceItem;
+import com.sws.app.db.model.PlantItem;
 import com.sws.app.iot.IotManager;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class SoilMoistureStatsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG_NAME, "onClick: inside listener function for moisture stats button");
-             //   getMoistureStats();
+                getMoistureStats();
             }
         });
 
@@ -110,18 +111,39 @@ public class SoilMoistureStatsActivity extends AppCompatActivity {
 
         Spinner portSpinner = (Spinner) findViewById(R.id.spinner_plant_port);
         String plantPort = portSpinner.getSelectedItem().toString();
+        String resultMessage;
 
+        // make request to device to update soil moisture stat in database
         try {
             IotManager iotManager = IotManager.getInstance();
-           // iotManager.waterPlant(deviceId, plantPort);
-            String resultMessage = "Water Plant success !";
-            Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort);
-            Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
+            iotManager.requestDeviceForSoilMoistureStat(deviceId, plantPort);
         } catch (Exception e) {
-            String resultMessage = "Error Getting Moisture Stats !";
+            resultMessage = "Error Getting Moisture Stats !";
             Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort);
             e.printStackTrace();
+            return;
+        }
+
+        // sleep for few seconds
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // query database
+        try {
+            DDBManager ddbManager = DDBManager.getInstance();
+            PlantItem plantItem = ddbManager.getPlantItem(deviceId, plantPort);
+
+            // show soil moisture stat, at this point plantItem will always be not null
+            resultMessage = "Moisture Stat: " + plantItem.getMoistureStat();
+            Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_LONG).show();
+        } catch (DDBManager.PlantGetException e) {
+            resultMessage = "Error occurred while fetching pant info!";
+            Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+            return;
         }
     }
-
 }

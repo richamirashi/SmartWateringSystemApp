@@ -14,6 +14,7 @@ public class PlantItem {
     private String type;
     private String description;
     private String moistureStat;
+    private String moistureStatLastTimeStamp;
     private String lastWatered;
     private String scheduledStartTime;
     private String frequency;
@@ -97,6 +98,15 @@ public class PlantItem {
 
     public void setScheduledFrequency(String frequency) {
         this.frequency = frequency;
+    }
+
+    @DynamoDBAttribute(attributeName = "moistureStatLastTimeStamp")
+    public String getMoistureStatLastTimeStamp() {
+        return moistureStatLastTimeStamp;
+    }
+
+    public void setMoistureStatLastTimeStamp(String moistureStatLastTimeStamp) {
+        this.moistureStatLastTimeStamp = moistureStatLastTimeStamp;
     }
 
 }
