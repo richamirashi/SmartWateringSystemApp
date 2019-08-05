@@ -151,7 +151,7 @@ public class SetScheduleActivity extends AppCompatActivity {
 
         try {
             DDBManager ddbManager = DDBManager.getInstance();
-            ddbManager.setSchedule(deviceId, plantPort, scheduleStartDateStr, frequency);
+            ddbManager.setSchedule(deviceId, plantPort, scheduleStartDateStr, frequency, duration);
             resultMessage = "Schedule created !";
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
             IotManager iotManager = IotManager.getInstance();

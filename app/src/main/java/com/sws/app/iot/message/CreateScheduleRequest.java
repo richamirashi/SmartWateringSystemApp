@@ -4,15 +4,15 @@ import com.google.gson.Gson;
 
 public class CreateScheduleRequest extends Request {
 
-    private String duration;
-    private String frequency;
+    private String scheduledDuration;
+    private String scheduledFrequency;
     private String scheduledStartTime;
 
-    public CreateScheduleRequest(String plantPort, String scheduledStartTime, String frequency, String duration) {
+    public CreateScheduleRequest(String plantPort, String scheduledStartTime, String scheduledFrequency, String scheduledDuration) {
         super(plantPort);
-        this.duration = duration;
+        this.scheduledDuration = scheduledDuration;
         this.scheduledStartTime = scheduledStartTime;
-        this.frequency = getFrequency(frequency);
+        this.scheduledFrequency = getFrequency(scheduledFrequency);
     }
 
     private String getFrequency(String frequency) {
@@ -27,10 +27,6 @@ public class CreateScheduleRequest extends Request {
         } else {
             return "30";
         }
-    }
-
-    public String getDuration() {
-        return duration;
     }
 
     public String toJson() {

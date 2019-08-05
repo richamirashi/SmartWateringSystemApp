@@ -252,7 +252,7 @@ public class DDBManager {
     public class PlantDoesNotExistException extends Exception {
     }
 
-    public void setSchedule(String deviceId, String plantPort, String startDateTime, String frequency)
+    public void setSchedule(String deviceId, String plantPort, String startDateTime, String frequency, String duration)
         throws PlantUpdateException, PlantDoesNotExistException {
 
         PlantItem plantItem = new PlantItem();
@@ -270,6 +270,7 @@ public class DDBManager {
 
             plantItem.setScheduledStartTime(startDateTime);
             plantItem.setScheduledFrequency(frequency);
+            plantItem.setScheduledDuration(duration);
 
             // save object to database
             ddbMapper.save(plantItem);
