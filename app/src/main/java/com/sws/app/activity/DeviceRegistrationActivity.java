@@ -45,6 +45,16 @@ public class DeviceRegistrationActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Log.i(TAG_NAME, "Back button pressed");
+        Intent intent = new Intent(DeviceRegistrationActivity.this, DevicesListActivity.class);
+        Session session = Session.fromJson(getIntent().getStringExtra("session"));
+        Log.i(TAG_NAME, "Back button: " + session.toJson());
+        intent.putExtra("session", session.toJson());
+        startActivity(intent);
+    }
+
     private void registerDevice(){
         String resultMessage;
         Session session = Session.fromJson(getIntent().getStringExtra("session"));

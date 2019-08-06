@@ -57,6 +57,16 @@ public class SoilMoistureStatsActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Log.i(TAG_NAME, "Back button pressed");
+        Session session = Session.fromJson(getIntent().getStringExtra("session"));
+        Log.i(TAG_NAME, "Back button: " + session.toJson());
+        Intent intent = new Intent(SoilMoistureStatsActivity.this, PlantInfoActivity.class);
+        intent.putExtra("session", session.toJson());
+        startActivity(intent);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -139,6 +149,11 @@ public class SoilMoistureStatsActivity extends AppCompatActivity {
             // show soil moisture stat, at this point plantItem will always be not null
             resultMessage = "Moisture Stat: " + plantItem.getMoistureStat();
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(SoilMoistureStatsActivity.this, PlantInfoActivity.class);
+            Session session = Session.fromJson(getIntent().getStringExtra("session"));
+            Log.i(TAG_NAME, "Session: " + session.toJson());
+            intent.putExtra("session", session.toJson());
+            startActivity(intent);
         } catch (DDBManager.PlantGetException e) {
             resultMessage = "Error occurred while fetching pant info!";
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();

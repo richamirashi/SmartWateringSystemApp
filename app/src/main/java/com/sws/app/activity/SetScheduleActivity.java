@@ -66,6 +66,16 @@ public class SetScheduleActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Log.i(TAG_NAME, "Back button pressed");
+        Session session = Session.fromJson(getIntent().getStringExtra("session"));
+        Log.i(TAG_NAME, "Back button: " + session.toJson());
+        Intent intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);
+        intent.putExtra("session", session.toJson());
+        startActivity(intent);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -159,6 +169,11 @@ public class SetScheduleActivity extends AppCompatActivity {
             Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort
                     + "startDateTime=" + scheduleStartDateStr
                     + "duration=" + duration + "frequency=" + frequency);
+            Intent intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);
+            Session session = Session.fromJson(getIntent().getStringExtra("session"));
+            Log.i(TAG_NAME, "Session: " + session.toJson());
+            intent.putExtra("session", session.toJson());
+            startActivity(intent);
         } catch (Exception e) {
             resultMessage = "Error occurred while creating a schedule !";
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();

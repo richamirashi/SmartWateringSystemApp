@@ -55,6 +55,16 @@ public class PlantsListActivity extends AppCompatActivity implements ItemClickLi
     }
 
     @Override
+    public void onBackPressed() {
+        Log.i(TAG_NAME, "Back button pressed");
+        Intent intent = new Intent(PlantsListActivity.this, DevicesListActivity.class);
+        Session session = Session.fromJson(getIntent().getStringExtra("session"));
+        Log.i(TAG_NAME, "Back button: " + session.toJson());
+        intent.putExtra("session", session.toJson());
+        startActivity(intent);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Session session = Session.fromJson(getIntent().getStringExtra("session"));

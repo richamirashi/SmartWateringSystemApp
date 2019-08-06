@@ -14,11 +14,11 @@
             android:title="Water Plant" />
         <item
             android:id="@+id/nav_set_schedule"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_schedule_black_24dp"
             android:title="Set Schedule" />
         <item
             android:id="@+id/nav_soil_moisture_stats"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_assessment_black_24dp"
             android:title="Soil Moisture Stats" />
     </group>
 

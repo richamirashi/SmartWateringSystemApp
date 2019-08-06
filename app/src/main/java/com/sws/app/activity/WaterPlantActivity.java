@@ -47,14 +47,24 @@ public class WaterPlantActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG_NAME, "onClick: inside listener function for cancel");
-                // TODO: Fix this for going back to the activity that called it.
-                Intent intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
                 Session session = Session.fromJson(getIntent().getStringExtra("session"));
                 Log.i(TAG_NAME, "Cancel Session: " + session.toJson());
+                // TODO: Fix this for going back to the activity that called it.
+                Intent intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
                 intent.putExtra("session", session.toJson());
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.i(TAG_NAME, "Back button pressed");
+        Session session = Session.fromJson(getIntent().getStringExtra("session"));
+        Log.i(TAG_NAME, "Back button: " + session.toJson());
+        Intent intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
+        intent.putExtra("session", session.toJson());
+        startActivity(intent);
     }
 
     @Override
@@ -121,7 +131,13 @@ public class WaterPlantActivity extends AppCompatActivity {
             iotManager.waterPlant(deviceId, plantPort, duration);
             String resultMessage = "Water Plant success !";
             Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort + "duration=" + duration);
+            Intent intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
+            Session session = Session.fromJson(getIntent().getStringExtra("session"));
+            Log.i(TAG_NAME, "Session: " + session.toJson());
+            intent.putExtra("session", session.toJson());
+            Thread.sleep(2000);
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
+            startActivity(intent);
         } catch (Exception e) {
             String resultMessage = "Error Watering plant !";
             Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort + "duration=" + duration);

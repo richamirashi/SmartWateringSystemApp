@@ -45,6 +45,10 @@ public class DevicesListActivity extends AppCompatActivity implements ItemClickL
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        // do nothing
+    }
 
     @Override
     protected void onResume() {
