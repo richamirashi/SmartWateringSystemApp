@@ -127,34 +127,6 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="25dp"
-                android:text="Duration:"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:paddingTop="10dp">
-            </TextView>
-
-            <EditText
-                android:id="@+id/tv_duration"
-                android:layout_width="240dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="27dp"
-                android:inputType="text"
-                android:hint="How long you want to water"
-                android:textColorHint="@drawable/selector"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="140dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="25dp"
                 android:text="Frequency:"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -166,6 +138,42 @@
                 android:layout_width="240dp"
                 android:layout_height="50dp"
                 android:entries="@array/schedule_frequency_array"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="25dp"
+                android:text="Duration to Water Plant:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:paddingTop="10dp">
+            </TextView>
+
+            <EditText
+                android:id="@+id/tv_duration"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:text="sec"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:paddingTop="10dp">
+            </TextView>
 
         </LinearLayout>
 
