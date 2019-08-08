@@ -2,13 +2,15 @@ package com.sws.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -25,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class SetScheduleActivity extends AppCompatActivity {
+public class SetScheduleActivity extends BaseActivity {
 
     private static final String TAG_NAME = "SetScheduleActivity";
 
@@ -39,7 +41,10 @@ public class SetScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "SetScheduleActivity.onCreate called ");
-        setContentView(R.layout.set_schedule);
+//        setContentView(R.layout.set_schedule);
+
+        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.set_schedule, contentFrameLayout);
 
         Button scheduleButton = (Button) this.findViewById(R.id.button_schedule);
         scheduleButton.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +73,13 @@ public class SetScheduleActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.i(TAG_NAME, "Back button pressed");
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         Log.i(TAG_NAME, "Back button: " + session.toJson());
         Intent intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);

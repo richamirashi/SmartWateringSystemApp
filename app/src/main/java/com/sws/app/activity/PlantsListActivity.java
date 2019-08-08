@@ -2,12 +2,14 @@ package com.sws.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +22,7 @@ import com.sws.app.listener.ItemClickListener;
 
 import java.util.List;
 
-public class PlantsListActivity extends AppCompatActivity implements ItemClickListener {
+public class PlantsListActivity extends BaseActivity implements ItemClickListener {
 
     private static final String TAG_NAME = "PlantsListActivity";
 
@@ -30,7 +32,10 @@ public class PlantsListActivity extends AppCompatActivity implements ItemClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "PlantsListActivity.onCreate called ");
-        setContentView(R.layout.plants_list);
+//        setContentView(R.layout.plants_list);
+
+        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.plants_list, contentFrameLayout);
 
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
 
@@ -57,6 +62,13 @@ public class PlantsListActivity extends AppCompatActivity implements ItemClickLi
     @Override
     public void onBackPressed() {
         Log.i(TAG_NAME, "Back button pressed");
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+
         Intent intent = new Intent(PlantsListActivity.this, DevicesListActivity.class);
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         Log.i(TAG_NAME, "Back button: " + session.toJson());

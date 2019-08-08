@@ -2,12 +2,14 @@ package com.sws.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -15,14 +17,17 @@ import com.sws.app.R;
 import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 
-public class PlantRegistrationActivity extends AppCompatActivity {
+public class PlantRegistrationActivity extends BaseActivity {
 
     private static final String TAG_NAME = "PlantRegistrationActvty";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "PlantRegistrationActivity.onCreate called ");
-        setContentView(R.layout.plant_registration);
+//        setContentView(R.layout.plant_registration);
+
+        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.plant_registration, contentFrameLayout);
 
         // For plant port spinner
         Spinner portSpinner = (Spinner) findViewById(R.id.spinner_plant_port);
@@ -64,6 +69,13 @@ public class PlantRegistrationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.i(TAG_NAME, "Back button pressed");
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+
         Intent intent = new Intent(PlantRegistrationActivity.this, PlantsListActivity.class);
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         Log.i(TAG_NAME, "Back button: " + session.toJson());

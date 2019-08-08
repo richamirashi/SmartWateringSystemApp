@@ -2,25 +2,30 @@ package com.sws.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.sws.app.R;
 import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 
-public class DeviceRegistrationActivity extends AppCompatActivity {
+public class DeviceRegistrationActivity extends BaseActivity {
 
     private static final String TAG_NAME = "DeviceRegstrationActvty";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "DeviceRegistrationActivity.onCreate called ");
-        setContentView(R.layout.device_registration);
+//        setContentView(R.layout.device_registration);
+
+        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.device_registration, contentFrameLayout);
 
         Button registerButton = (Button) this.findViewById(R.id.button_register);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +53,13 @@ public class DeviceRegistrationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.i(TAG_NAME, "Back button pressed");
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+
         Intent intent = new Intent(DeviceRegistrationActivity.this, DevicesListActivity.class);
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         Log.i(TAG_NAME, "Back button: " + session.toJson());

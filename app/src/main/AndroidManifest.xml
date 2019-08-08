@@ -23,17 +23,36 @@
 
         <activity
             android:name=".activity.UserRegistrationActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-        />
-        <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.DevicesListActivity" />
-        <activity android:name=".activity.DeviceRegistrationActivity" />
-        <activity android:name=".activity.PlantsListActivity" />
-        <activity android:name=".activity.PlantRegistrationActivity" />
-        <activity android:name=".activity.PlantInfoActivity" />
-        <activity android:name=".activity.WaterPlantActivity"/>
-        <activity android:name=".activity.SetScheduleActivity"/>
-        <activity android:name=".activity.SoilMoistureStatsActivity"/>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".activity.DevicesListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".activity.PlantsListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity android:name=".activity.DeviceRegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.PlantRegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.PlantInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.WaterPlantActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.SetScheduleActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.SoilMoistureStatsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -2,10 +2,12 @@ package com.sws.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sws.app.R;
@@ -13,7 +15,7 @@ import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 import com.sws.app.db.model.PlantItem;
 
-public class PlantInfoActivity extends AppCompatActivity {
+public class PlantInfoActivity extends BaseActivity {
 
     private static final String TAG_NAME = "PlantInfoActivity";
 
@@ -21,7 +23,10 @@ public class PlantInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "PlantInfoActivity.onCreate called ");
-        setContentView(R.layout.plant_info);
+//        setContentView(R.layout.plant_info);
+
+        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.plant_info, contentFrameLayout);
 
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         Log.i(TAG_NAME, "Session: " + session.toJson());
@@ -111,6 +116,13 @@ public class PlantInfoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.i(TAG_NAME, "Back button pressed");
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         Log.i(TAG_NAME, "Back button: " + session.toJson());
         Intent intent = new Intent(PlantInfoActivity.this, PlantsListActivity.class);

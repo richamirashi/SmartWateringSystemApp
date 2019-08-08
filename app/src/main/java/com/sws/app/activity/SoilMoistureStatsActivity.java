@@ -2,11 +2,13 @@ package com.sws.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,7 +21,7 @@ import com.sws.app.iot.IotManager;
 
 import java.util.List;
 
-public class SoilMoistureStatsActivity extends AppCompatActivity {
+public class SoilMoistureStatsActivity extends BaseActivity {
     private static final String TAG_NAME = "SoilMoistureStatsActvty";
 
     private ArrayAdapter<DeviceItem> deviceNameAdapter;
@@ -30,7 +32,10 @@ public class SoilMoistureStatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "SoilMoistureStatsActivity.onCreate called ");
-        setContentView(R.layout.soil_moisture_stats);
+//        setContentView(R.layout.soil_moisture_stats);
+
+        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.soil_moisture_stats, contentFrameLayout);
 
         Button getMoistureStatsButton = (Button) this.findViewById(R.id.button_get_moisture_stats);
         getMoistureStatsButton.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +64,13 @@ public class SoilMoistureStatsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.i(TAG_NAME, "Back button pressed");
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         Log.i(TAG_NAME, "Back button: " + session.toJson());
         Intent intent = new Intent(SoilMoistureStatsActivity.this, PlantInfoActivity.class);
