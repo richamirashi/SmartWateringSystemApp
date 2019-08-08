@@ -23,7 +23,6 @@ public class PlantInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "PlantInfoActivity.onCreate called ");
-//        setContentView(R.layout.plant_info);
 
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.plant_info, contentFrameLayout);

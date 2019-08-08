@@ -31,7 +31,6 @@ public class DevicesListActivity extends BaseActivity implements ItemClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "onCreate called");
-//        setContentView(R.layout.devices_list);
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.devices_list, contentFrameLayout);
 
@@ -94,6 +93,5 @@ public class DevicesListActivity extends BaseActivity implements ItemClickListen
         Log.i(TAG_NAME, "On Device click Session: " + newSession.toJson());
         intent.putExtra("session", newSession.toJson());
         startActivity(intent);
-//        drawer.closeDrawers();
     }
 }

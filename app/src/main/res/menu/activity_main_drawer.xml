@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_devices"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_featured_play_list_black_24dp"
             android:title="Devices" />
         <item
             android:id="@+id/nav_water_plant"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_opacity_black_24dp"
             android:title="Water Plant" />
         <item
             android:id="@+id/nav_set_schedule"
@@ -18,17 +18,14 @@
             android:title="Set Schedule" />
         <item
             android:id="@+id/nav_soil_moisture_stats"
-            android:icon="@drawable/ic_assessment_black_24dp"
+            android:icon="@drawable/ic_timeline_black_24dp"
             android:title="Soil Moisture Stats" />
-    </group>
 
-    <item android:title="Manage">
-        <menu>
-            <item
-                android:id="@+id/nav_signout"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Sign Out" />
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@drawable/ic_lock_outline_black_24dp"
+            android:title="Sign Out" />
+
+    </group>
 
 </menu>

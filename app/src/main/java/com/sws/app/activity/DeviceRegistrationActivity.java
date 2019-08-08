@@ -22,7 +22,6 @@ public class DeviceRegistrationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "DeviceRegistrationActivity.onCreate called ");
-//        setContentView(R.layout.device_registration);
 
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.device_registration, contentFrameLayout);

@@ -33,7 +33,6 @@ public class WaterPlantActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "WaterPlantActivity.onCreate called ");
-//        setContentView(R.layout.water_plant);
 
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.water_plant, contentFrameLayout);
@@ -52,12 +51,20 @@ public class WaterPlantActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG_NAME, "onClick: inside listener function for cancel");
+
+                // Select intent based on caller activity/drawer layout
                 Session session = Session.fromJson(getIntent().getStringExtra("session"));
-                Log.i(TAG_NAME, "Cancel Session: " + session.toJson());
-                // TODO: Fix this for going back to the activity that called it.
-                Intent intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
-                intent.putExtra("session", session.toJson());
-                startActivity(intent);
+                Intent intent = null;
+                if(session.getPlantItem() != null) {
+                    // When parent caller is PlantInfoActivity
+                    intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
+                } else {
+                    // When caller is drawer
+                    intent = new Intent(WaterPlantActivity.this, DevicesListActivity.class);
+                }
+
+                // Start next session
+                startNextActivity(TAG_NAME, intent, session);
             }
         });
     }
@@ -72,11 +79,19 @@ public class WaterPlantActivity extends BaseActivity {
             return;
         }
 
+        // Select intent based on caller activity/drawer layout
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
-        Log.i(TAG_NAME, "Back button: " + session.toJson());
-        Intent intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
-        intent.putExtra("session", session.toJson());
-        startActivity(intent);
+        Intent intent = null;
+        if(session.getPlantItem() != null) {
+            // When parent caller is PlantInfoActivity
+            intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
+        } else {
+            // When caller is drawer
+            intent = new Intent(WaterPlantActivity.this, DevicesListActivity.class);
+        }
+
+        // Start next session
+        startNextActivity(TAG_NAME, intent, session);
     }
 
     @Override
@@ -86,8 +101,8 @@ public class WaterPlantActivity extends BaseActivity {
         // Get session details
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         String username = session.getUsername();
-        String deviceId = session.getPlantItem().getDeviceId();
-        String plantPort = session.getPlantItem().getPlantPort();
+        String deviceId = (session.getPlantItem() == null? null: session.getPlantItem().getDeviceId());
+        String plantPort = (session.getPlantItem() == null ? null : session.getPlantItem().getPlantPort());
 
         // Get list of devices from database to populate the deviceIdSpinner
         List<DeviceItem> deviceItemList;
@@ -139,17 +154,29 @@ public class WaterPlantActivity extends BaseActivity {
         String plantPort = portSpinner.getSelectedItem().toString();
 
         try {
+            // Water plant through AWS IOT
             IotManager iotManager = IotManager.getInstance();
             iotManager.waterPlant(deviceId, plantPort, duration);
             String resultMessage = "Water Plant success !";
-            Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort + "duration=" + duration);
-            Intent intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
+            Log.i(TAG_NAME, resultMessage + " | deviceId=" + deviceId + " |  plantPort=" + plantPort + " | duration=" + duration);
+
+            // Select intent based on caller activity/drawer layout
             Session session = Session.fromJson(getIntent().getStringExtra("session"));
-            Log.i(TAG_NAME, "Session: " + session.toJson());
-            intent.putExtra("session", session.toJson());
+            Intent intent = null;
+            if(session.getPlantItem() != null) {
+                // When parent caller is PlantInfoActivity
+                intent = new Intent(WaterPlantActivity.this, PlantInfoActivity.class);
+            } else {
+                // When caller is drawer
+                intent = new Intent(WaterPlantActivity.this, DevicesListActivity.class);
+            }
+
+            // Sleep for 2 seconds for device to water plant
             Thread.sleep(2000);
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+
+            // Start next session
+            startNextActivity(TAG_NAME, intent, session);
         } catch (Exception e) {
             String resultMessage = "Error Watering plant !";
             Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort + "duration=" + duration);

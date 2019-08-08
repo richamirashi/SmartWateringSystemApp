@@ -41,7 +41,6 @@ public class SetScheduleActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "SetScheduleActivity.onCreate called ");
-//        setContentView(R.layout.set_schedule);
 
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.set_schedule, contentFrameLayout);
@@ -60,12 +59,20 @@ public class SetScheduleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG_NAME, "onClick: inside listener function for cancel");
-                // TODO: Fix this for going back to the activity that called it.
-                Intent intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);
+
+                // Select intent based on caller activity/drawer layout
                 Session session = Session.fromJson(getIntent().getStringExtra("session"));
-                Log.i(TAG_NAME, "Cancel Session: " + session.toJson());
-                intent.putExtra("session", session.toJson());
-                startActivity(intent);
+                Intent intent = null;
+                if(session.getPlantItem() != null) {
+                    // When parent caller is PlantInfoActivity
+                    intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);
+                } else {
+                    // When caller is drawer
+                    intent = new Intent(SetScheduleActivity.this, DevicesListActivity.class);
+                }
+
+                // Start next session
+                startNextActivity(TAG_NAME, intent, session);
             }
         });
     }
@@ -80,11 +87,19 @@ public class SetScheduleActivity extends BaseActivity {
             return;
         }
 
+        // Select intent based on caller activity/drawer layout
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
-        Log.i(TAG_NAME, "Back button: " + session.toJson());
-        Intent intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);
-        intent.putExtra("session", session.toJson());
-        startActivity(intent);
+        Intent intent = null;
+        if(session.getPlantItem() != null) {
+            // When parent caller is PlantInfoActivity
+            intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);
+        } else {
+            // When caller is drawer
+            intent = new Intent(SetScheduleActivity.this, DevicesListActivity.class);
+        }
+
+        // Start next session
+        startNextActivity(TAG_NAME, intent, session);
     }
 
     @Override
@@ -94,8 +109,8 @@ public class SetScheduleActivity extends BaseActivity {
         // Get session details
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
         String username = session.getUsername();
-        String deviceId = session.getPlantItem().getDeviceId();
-        String plantPort = session.getPlantItem().getPlantPort();
+        String deviceId = (session.getPlantItem() == null? null: session.getPlantItem().getDeviceId());
+        String plantPort = (session.getPlantItem() == null ? null : session.getPlantItem().getPlantPort());
 
         // Get list of devices from database to populate the deviceIdSpinner
         List<DeviceItem> deviceItemList;
@@ -181,11 +196,20 @@ public class SetScheduleActivity extends BaseActivity {
             Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort
                     + "startDateTime=" + scheduleStartDateStr
                     + "duration=" + duration + "frequency=" + frequency);
-            Intent intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);
+
+            // Select intent based on caller activity/drawer layout
             Session session = Session.fromJson(getIntent().getStringExtra("session"));
-            Log.i(TAG_NAME, "Session: " + session.toJson());
-            intent.putExtra("session", session.toJson());
-            startActivity(intent);
+            Intent intent = null;
+            if(session.getPlantItem() != null) {
+                // When parent caller is PlantInfoActivity
+                intent = new Intent(SetScheduleActivity.this, PlantInfoActivity.class);
+            } else {
+                // When caller is drawer
+                intent = new Intent(SetScheduleActivity.this, DevicesListActivity.class);
+            }
+
+            // Start next session
+            startNextActivity(TAG_NAME, intent, session);
         } catch (Exception e) {
             resultMessage = "Error occurred while creating a schedule !";
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();

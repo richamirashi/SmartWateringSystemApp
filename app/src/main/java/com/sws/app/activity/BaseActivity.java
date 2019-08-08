@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.sws.app.R;
@@ -35,8 +36,9 @@ public class BaseActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    protected void startNextActivity(Intent intent, Session session) {
+    protected void startNextActivity(String tag, Intent intent, Session session) {
         intent.putExtra(SESSION_NAME, session.toJson());
+        Log.i(tag, "Session: " + session.toJson());
         startActivity(intent);
     }
 
@@ -47,17 +49,35 @@ public class BaseActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        String TAG_NAME = "NavigationItemSelected";
+        Session session = Session.fromJson(getIntent().getStringExtra("session"));
 
         if (id == R.id.nav_devices) {
-
+            Log.i(TAG_NAME, "Inside nav menu for Device List option");
+            Intent intent = new Intent(this, DevicesListActivity.class);
+            Session nextSession = new Session(session.getUsername());
+            startNextActivity(TAG_NAME, intent, nextSession);
         } else if (id == R.id.nav_water_plant) {
-
+            Log.i(TAG_NAME, "Inside nav menu for Water Plant option");
+            Intent intent = new Intent(this, WaterPlantActivity.class);
+            Session nextSession = new Session(session.getUsername());
+            startNextActivity(TAG_NAME, intent, nextSession);
         } else if (id == R.id.nav_set_schedule) {
-
+            Log.i(TAG_NAME, "Inside nav menu for Set Schedule option");
+            Intent intent = new Intent(this, SetScheduleActivity.class);
+            Session nextSession = new Session(session.getUsername());
+            startNextActivity(TAG_NAME, intent, nextSession);
         } else if (id == R.id.nav_soil_moisture_stats) {
-
+            Log.i(TAG_NAME, "Inside nav menu for Soil Moisture Stats option");
+            Intent intent = new Intent(this, SoilMoistureStatsActivity.class);
+            Session nextSession = new Session(session.getUsername());
+            startNextActivity(TAG_NAME, intent, nextSession);
         } else if (id == R.id.nav_signout) {
-
+            Log.i(TAG_NAME, "Inside nav menu for SignOut option");
+            Intent intent = new Intent(this, LoginActivity.class);
+            //Session nextSession = null;
+            //startNextActivity(TAG_NAME, intent, null);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

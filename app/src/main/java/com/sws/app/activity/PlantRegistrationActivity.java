@@ -24,7 +24,6 @@ public class PlantRegistrationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "PlantRegistrationActivity.onCreate called ");
-//        setContentView(R.layout.plant_registration);
 
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.plant_registration, contentFrameLayout);
