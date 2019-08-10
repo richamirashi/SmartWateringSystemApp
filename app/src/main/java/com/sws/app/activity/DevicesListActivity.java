@@ -31,6 +31,7 @@ public class DevicesListActivity extends BaseActivity implements ItemClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG_NAME, "onCreate called");
+
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.devices_list, contentFrameLayout);
 
@@ -63,7 +64,6 @@ public class DevicesListActivity extends BaseActivity implements ItemClickListen
     protected void onResume() {
         super.onResume();
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
-//        setNavBarUserName(session.getUsername());
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_devices);
         recyclerView.setHasFixedSize(true);

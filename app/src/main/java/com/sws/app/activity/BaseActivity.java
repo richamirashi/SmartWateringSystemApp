@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.sws.app.R;
 import com.sws.app.commons.Session;
@@ -19,14 +20,12 @@ public class BaseActivity extends AppCompatActivity
 
     public static final String SESSION_NAME = "session";
 
-//    protected Session currentSession;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set toolbar listener
+        // Set toolbar and navigation view listener
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -36,12 +35,12 @@ public class BaseActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-    }
 
-//    protected void setNavBarUserName(String userName) {
-//        TextView username = findViewById(R.id.tv_username);
-//        username.setText(userName);
-//    }
+        // set username
+        TextView username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_username);
+        Session session = Session.fromJson(getIntent().getStringExtra(SESSION_NAME));
+        username.setText("Hello, " + session.getUsername());
+    }
 
     protected void startNextActivity(String tag, Intent intent, Session session) {
         intent.putExtra(SESSION_NAME, session.toJson());
@@ -82,8 +81,6 @@ public class BaseActivity extends AppCompatActivity
         } else if (id == R.id.nav_signout) {
             Log.i(TAG_NAME, "Inside nav menu for SignOut option");
             Intent intent = new Intent(this, LoginActivity.class);
-            //Session nextSession = null;
-            //startNextActivity(TAG_NAME, intent, null);
             startActivity(intent);
         }
 
