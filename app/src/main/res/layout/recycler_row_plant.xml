@@ -14,11 +14,18 @@
         app:cardBackgroundColor="@color/cardview_light_background"
         app:cardCornerRadius="3dp">
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/plant" />
+
         <TextView
             android:id="@+id/tv_recyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="70dp"
             android:textSize="20sp"
             android:padding="13dp"/>
 

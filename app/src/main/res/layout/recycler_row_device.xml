@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="10dp">
+    android:background="#E5FFCC">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/cv"
+        app:cardBackgroundColor="@color/cardview_light_background"
+        app:cardCornerRadius="3dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/deviceicon" />
+
+        <TextView
+            android:id="@+id/tv_recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:textSize="20sp"
+            android:padding="13dp"/>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
