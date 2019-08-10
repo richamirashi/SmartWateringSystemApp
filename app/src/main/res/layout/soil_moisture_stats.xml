@@ -2,13 +2,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:background="#E5FFCC">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="fill_parent"
@@ -21,54 +23,75 @@
             android:textSize="25dip"
             android:textStyle="bold"/>
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:cardBackgroundColor="@color/cardview_light_background"
+            app:cardCornerRadius="3dp">
 
-            <TextView
-                android:layout_width="140dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:text="Device Name:"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:paddingTop="10dp">
-            </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/spinner_deviceName"
-                android:layout_width="240dp"
-                android:layout_height="50dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp">
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:text="Device Name:"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:paddingTop="10dp">
+                    </TextView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp">
+                    <Spinner
+                        android:id="@+id/spinner_deviceName"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="15dp"/>
 
-            <TextView
-                android:layout_width="140dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:text="Plant Port:"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:paddingTop="10dp">
-            </TextView>
+                </LinearLayout>
 
-            <Spinner
-                android:id="@+id/spinner_plant_port"
-                android:layout_width="240dp"
-                android:layout_height="50dp"
-                android:entries="@array/plant_port_array" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp">
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:text="Plant Port:"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:paddingTop="10dp">
+                    </TextView>
+
+                    <Spinner
+                        android:id="@+id/spinner_plant_port"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="15dp"
+                        android:entries="@array/plant_port_array" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,24 +100,30 @@
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button_get_moisture_stats"
-                android:layout_width="175dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="12dp"
+                android:textSize="18sp"
+                android:textColor="@color/cardview_light_background"
+                app:backgroundTint="@color/colorPrimaryDark"
                 android:layout_weight="1"
                 android:padding="12dp"
-                android:text="Get Moisture Stats"/>
+                android:text="Get  Moisture  Stats"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button_cancel"
-                android:layout_width="125dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginLeft="12dp"
+                android:textSize="18sp"
+                android:textColor="@color/cardview_light_background"
+                app:backgroundTint="@color/colorPrimaryDark"
                 android:layout_weight="1"
                 android:padding="12dp"
                 android:text="Cancel"/>

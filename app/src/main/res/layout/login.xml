@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:fitsSystemWindows="true"
-        android:background="#E5FFCC">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="#E5FFCC">
 
         <LinearLayout
             android:orientation="vertical"
@@ -16,6 +17,7 @@
             <ImageView android:src="@drawable/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginBottom="24dp"
                 android:layout_gravity="center_horizontal" />
 
@@ -24,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="SMART WATERING SYSTEM"
-            android:textColor="#000000"
+            android:textColor="@color/colorPrimaryDark"
             android:gravity="center"
             android:textSize="25dip"
             android:textStyle="bold"/>
@@ -33,7 +35,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="8dp">
             <EditText android:id="@+id/input_email"
                 android:layout_width="match_parent"
@@ -61,6 +63,9 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:textSize="20sp"
+            android:textColor="@color/cardview_light_background"
+            app:backgroundTint="@color/colorPrimaryDark"
             android:text="Login"/>
 
             <TextView android:id="@+id/text_signup"
@@ -68,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
-                android:textSize="16dip"/>
+                android:textSize="18sp"/>
 
         </LinearLayout>
 </ScrollView>

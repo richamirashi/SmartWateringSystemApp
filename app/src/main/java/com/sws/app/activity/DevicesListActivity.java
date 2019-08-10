@@ -63,6 +63,7 @@ public class DevicesListActivity extends BaseActivity implements ItemClickListen
     protected void onResume() {
         super.onResume();
         Session session = Session.fromJson(getIntent().getStringExtra("session"));
+//        setNavBarUserName(session.getUsername());
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_devices);
         recyclerView.setHasFixedSize(true);

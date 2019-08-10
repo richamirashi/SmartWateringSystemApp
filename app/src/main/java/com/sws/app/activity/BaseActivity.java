@@ -19,6 +19,8 @@ public class BaseActivity extends AppCompatActivity
 
     public static final String SESSION_NAME = "session";
 
+//    protected Session currentSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,11 @@ public class BaseActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+//    protected void setNavBarUserName(String userName) {
+//        TextView username = findViewById(R.id.tv_username);
+//        username.setText(userName);
+//    }
 
     protected void startNextActivity(String tag, Intent intent, Session session) {
         intent.putExtra(SESSION_NAME, session.toJson());

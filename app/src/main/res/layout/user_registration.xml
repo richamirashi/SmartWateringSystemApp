@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:background="#E5FFCC">
 
@@ -16,6 +17,7 @@
         <ImageView android:src="@drawable/logo"
             android:layout_width="wrap_content"
             android:layout_height="72dp"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
@@ -24,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="SMART WATERING SYSTEM"
-            android:textColor="#000000"
+            android:textColor="@color/colorPrimaryDark"
             android:gravity="center"
             android:textSize="25dip"
             android:textStyle="bold"/>
@@ -32,7 +34,7 @@
         <TextView android:id="@+id/text_user_registration"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:text="User Registration"
             android:textColor="#000000"
@@ -51,7 +53,7 @@
                 android:layout_width="110dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:text="Username:"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -63,11 +65,9 @@
                 android:layout_width="215dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="100dp"
-                android:layout_marginEnd="27dp"
-                android:layout_marginRight="27dp"
                 android:inputType="text"
                 android:hint="Username"
+                android:layout_marginStart="15dp"
                 android:textColorHint="@drawable/selector"/>
 
         </LinearLayout>
@@ -83,7 +83,7 @@
                 android:layout_width="110dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:text="Password:"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -95,9 +95,7 @@
                 android:layout_width="215dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="100dp"
-                android:layout_marginEnd="27dp"
-                android:layout_marginRight="27dp"
+                android:layout_marginStart="15dp"
                 android:inputType="text"
                 android:hint="Password"
                 android:textColorHint="@drawable/selector"/>
@@ -118,6 +116,9 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 android:padding="12dp"
+                android:textColor="@color/cardview_light_background"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:textSize="18sp"
                 android:text="Register"/>
 
             <android.support.v7.widget.AppCompatButton
@@ -129,6 +130,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:padding="12dp"
+                android:textColor="@color/cardview_light_background"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:textSize="18sp"
                 android:text="Cancel"/>
 
         </LinearLayout>
