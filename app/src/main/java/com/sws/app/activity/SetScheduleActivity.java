@@ -126,20 +126,20 @@ public class SetScheduleActivity extends BaseActivity {
 
         // For device spinner
         Spinner deviceNameSpinner = (Spinner) findViewById(R.id.spinner_deviceName);
-        deviceNameAdapter = new ArrayAdapter<DeviceItem>(this, android.R.layout.simple_spinner_dropdown_item, deviceItemList);
-        deviceNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        deviceNameAdapter = new ArrayAdapter<DeviceItem>(this, R.layout.spinner_style, deviceItemList);
+        deviceNameAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         deviceNameSpinner.setAdapter(deviceNameAdapter);
 
         // For plant port spinner
         Spinner portSpinner = (Spinner) findViewById(R.id.spinner_plant_port);
-        portAdapter = ArrayAdapter.createFromResource(this, R.array.plant_port_array, android.R.layout.simple_spinner_dropdown_item);
-        portAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        portAdapter = ArrayAdapter.createFromResource(this, R.array.plant_port_array, R.layout.spinner_style);
+        portAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         portSpinner.setAdapter(portAdapter);
 
         // For frequency spinner
         Spinner frequencySpinner = (Spinner) findViewById(R.id.spinner_frequency);
-        frequencyAdapter = ArrayAdapter.createFromResource(this, R.array.schedule_frequency_array, android.R.layout.simple_spinner_dropdown_item);
-        frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        frequencyAdapter = ArrayAdapter.createFromResource(this, R.array.schedule_frequency_array, R.layout.spinner_style);
+        frequencyAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         frequencySpinner.setAdapter(frequencyAdapter);
 
         // select values from session

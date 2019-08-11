@@ -31,15 +31,15 @@ public class PlantRegistrationActivity extends BaseActivity {
         // For plant port spinner
         Spinner portSpinner = (Spinner) findViewById(R.id.spinner_plant_port);
         ArrayAdapter<CharSequence> portAdapter = ArrayAdapter.createFromResource(this,
-                R.array.plant_port_array, android.R.layout.simple_spinner_dropdown_item);
-        portAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.plant_port_array, R.layout.spinner_style);
+        portAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         portSpinner.setAdapter(portAdapter);
 
         // For plant type spinner
         Spinner plantTypeSpinner = (Spinner) findViewById(R.id.spinner_plant_type);
         ArrayAdapter<CharSequence> plantTypeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.plant_type_array, android.R.layout.simple_spinner_dropdown_item);
-        plantTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.plant_type_array, R.layout.spinner_style);
+        plantTypeAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         plantTypeSpinner.setAdapter(plantTypeAdapter);
 
         Button registerButton = (Button) this.findViewById(R.id.button_register);

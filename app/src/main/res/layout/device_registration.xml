@@ -62,6 +62,7 @@
                         android:layout_marginTop="15dp"
                         android:inputType="text"
                         android:hint="Device ID"
+                        android:textSize="20sp"
                         android:textColorHint="@drawable/selector"/>
 
                 </LinearLayout>
@@ -89,6 +90,7 @@
                         android:layout_height="50dp"
                         android:layout_marginLeft="25dp"
                         android:inputType="text"
+                        android:textSize="20sp"
                         android:hint="Device Name"
                         android:textColorHint="@drawable/selector"/>
 
