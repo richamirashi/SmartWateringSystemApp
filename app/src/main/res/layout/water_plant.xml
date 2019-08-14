@@ -148,7 +148,8 @@
                 app:backgroundTint="@color/colorPrimaryDark"
                 android:layout_weight="1"
                 android:padding="12dp"
-                android:text="Water  Plant"/>
+                android:text="Water  Plant"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button_cancel"
@@ -163,7 +164,8 @@
                 app:backgroundTint="@color/colorPrimaryDark"
                 android:layout_weight="1"
                 android:padding="12dp"
-                android:text="Cancel"/>
+                android:text="Cancel"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
         </LinearLayout>
 

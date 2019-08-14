@@ -121,7 +121,8 @@
                 android:textColor="@color/cardview_light_background"
                 app:backgroundTint="@color/colorPrimaryDark"
                 android:textSize="18sp"
-                android:text="Register"/>
+                android:text="Register"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button_cancel"
@@ -135,7 +136,8 @@
                 android:textColor="@color/cardview_light_background"
                 app:backgroundTint="@color/colorPrimaryDark"
                 android:textSize="18sp"
-                android:text="Cancel"/>
+                android:text="Cancel"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
         </LinearLayout>
 

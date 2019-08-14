@@ -128,7 +128,8 @@
             android:textSize="18sp"
             android:textColor="@color/cardview_light_background"
             app:backgroundTint="@color/colorPrimaryDark"
-            android:text="Register  Plant"/>
+            android:text="Register  Plant"
+            android:foreground="?android:attr/selectableItemBackground"/>
 
     </LinearLayout>
 
