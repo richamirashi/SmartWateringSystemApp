@@ -28,7 +28,7 @@ public class IotManager {
 
     private static final String LOG_TAG = "IotManager";
 
-    private static final String END_POINT = "a2r9hrtpe5nxqx-ats.iot.us-west-2.amazonaws.com";
+    private static final String END_POINT = "";
 
     private static final String clientId = "waterPlantApp";
 
@@ -40,8 +40,8 @@ public class IotManager {
     }
 
     private IotManager(){
-        String ACCESS_KEY = "AKIAQAGZJLRFX4RFRWXG";
-        String SECRET_KEY = "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";
+        String ACCESS_KEY = "";
+        String SECRET_KEY = "";
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
         AWSCredentialsProvider awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
         mqttManager = new AWSIotMqttManager(clientId, END_POINT);
