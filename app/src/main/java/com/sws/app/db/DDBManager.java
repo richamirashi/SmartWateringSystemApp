@@ -34,8 +34,8 @@ public class DDBManager {
     }
 
     private DDBManager() {
-        String ACCESS_KEY = "AKIAQAGZJLRFX4RFRWXG";
-        String SECRET_KEY = "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";
+        String ACCESS_KEY = "";
+        String SECRET_KEY = "";
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
         AWSCredentialsProvider awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
         ddbClient = new AmazonDynamoDBClient(awsCredentialsProvider);
