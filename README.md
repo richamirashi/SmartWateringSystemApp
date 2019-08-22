@@ -6,7 +6,7 @@ Project Demo: [Demo](https://youtu.be/lDwCmjK6jXQ)
 
 The code for RaspberryPi controller: [plantPiController](https://github.com/richamirashi/plantpicontroller)
 
-
+&nbsp;
 
 ![Architecture](https://github.com/richamirashi/SmartWateringSystemApp/blob/master/SmartWateringSystemArchitecture.PNG)
 
