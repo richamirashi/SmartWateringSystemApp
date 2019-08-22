@@ -2,12 +2,14 @@
 
 The Smart Watering System (SWS) is an IoT project used to water multiple plants using an Android App and a hardware controller that consists of a [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi), a water pump, [a soil moisture sensor](https://www.sparkfun.com/products/13322), and a relay. An Android App communicates with the Raspberry Pi using [AWS IoT service](https://aws.amazon.com/iot-core/) to control the water pump and to get the soil moisture sensor readings stored in [DynamoDB database](https://aws.amazon.com/dynamodb/). The Smart Watering System can be used to water multiple plants, to set different watering schedules for the plants, to get the watering event history and the soil moisture stat of each plant.
 
-Project Demo: [Demo](https://youtu.be/lDwCmjK6jXQ)
+### Project Demo:
+[Demo](https://youtu.be/lDwCmjK6jXQ)
 
-The code for RaspberryPi controller: [plantPiController](https://github.com/richamirashi/plantpicontroller)
+### GitHub link for RaspberryPi Controller:
+[plantPiController](https://github.com/richamirashi/plantpicontroller)
 
+### Architecture:
 &nbsp;
-
 ![Architecture](https://github.com/richamirashi/SmartWateringSystemApp/blob/master/SmartWateringSystemArchitecture.PNG)
 
 ## Framework:
@@ -18,6 +20,8 @@ Software Tools:
   * SDK: Android SDK
   * IDE and Tools: Android studio 3.0.1
   * Version Control: GitHub
+
+&nbsp;
 Hardware Tools:
   * [Raspberry Pi 3 Model B](https://www.amazon.com/CanaKit-Raspberry-Premium-Clear-Supply/dp/B07BC7BMHY)
   * 5V /12 V Power supply
