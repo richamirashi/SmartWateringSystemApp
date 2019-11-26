@@ -17,8 +17,10 @@ import com.sws.app.R;
 import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 import com.sws.app.db.model.DeviceItem;
+import com.sws.app.db.model.PlantItem;
 import com.sws.app.iot.IotManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WaterPlantActivity extends BaseActivity {
@@ -110,7 +112,7 @@ public class WaterPlantActivity extends BaseActivity {
             DDBManager ddbManager = DDBManager.getInstance();
             deviceItemList = ddbManager.listDevices(username);
         } catch (DDBManager.DeviceListException e) {
-            String resultMessage = "Error occurred while fetching the device list !";
+            String resultMessage = "Error occurred while fetching the device list!";
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return;
@@ -128,19 +130,51 @@ public class WaterPlantActivity extends BaseActivity {
         portAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         portSpinner.setAdapter(portAdapter);
 
-        // select values from session
+        // select values from session when navigate from plant info activity to water plant activity
         if (deviceId != null) {
             int position = deviceNameAdapter.getPosition(session.getDeviceItem());
             deviceNameSpinner.setSelection(position);
             deviceNameSpinner.setEnabled(false);
         }
 
+        // select values from session when navigate from plant info activity to water plant activity
         if (plantPort != null) {
             int position = portAdapter.getPosition(plantPort);
             portSpinner.setSelection(position);
             portSpinner.setEnabled(false);
         }
 
+        // when navigate from drawer layout to water plant activity and when no device is registered
+        if(deviceItemList == null || deviceItemList.size() <= 0){
+//            Log.i(TAG_NAME, "deviceItemList size: " + deviceItemList.size());
+            Button waterPlantButton = (Button) this.findViewById(R.id.button_water_plant);
+            waterPlantButton.setEnabled(false);
+            portSpinner.setEnabled(false);
+        }
+        // when navigate from drawer layout to water plant activity and when no plants are registered
+        else if(deviceId == null && (deviceItemList != null || deviceItemList.size() > 0)){
+            DeviceItem deviceItem = deviceNameAdapter.getItem(deviceNameSpinner.getSelectedItemPosition());
+            String selecteddeviceId = deviceItem.getDeviceId();
+
+            List<PlantItem> plantItemList;
+            try{
+//                Log.i(TAG_NAME, "selecteddeviceId: " + selecteddeviceId);
+                DDBManager ddbManager = DDBManager.getInstance();
+                plantItemList = ddbManager.listPlants(selecteddeviceId);
+            } catch(DDBManager.PlantListException e){
+                String resultMessage = "Error occurred while fetching the plant list!";
+                Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                return;
+            }
+
+            if(plantItemList == null || plantItemList.size() <= 0){
+//                Log.i(TAG_NAME, "plantItemList size: " + plantItemList.size());
+                Button waterPlantButton = (Button) this.findViewById(R.id.button_water_plant);
+                waterPlantButton.setEnabled(false);
+                portSpinner.setEnabled(false);
+            }
+        }
     }
 
     public void waterPlant() {

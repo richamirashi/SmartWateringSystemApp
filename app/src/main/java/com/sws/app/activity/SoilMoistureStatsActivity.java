@@ -127,17 +127,51 @@ public class SoilMoistureStatsActivity extends BaseActivity {
         portAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         portSpinner.setAdapter(portAdapter);
 
-        // select values from session
+        // select values from session when navigate from plant info activity to soil moisture stats activity
         if (deviceId != null) {
             int position = deviceNameAdapter.getPosition(session.getDeviceItem());
             deviceNameSpinner.setSelection(position);
             deviceNameSpinner.setEnabled(false);
         }
 
+        // select values from session when navigate from plant info activity to soil moisture stats activity
         if (plantPort != null) {
             int position = portAdapter.getPosition(plantPort);
             portSpinner.setSelection(position);
             portSpinner.setEnabled(false);
+        }
+
+        // when navigate from drawer layout to soil moisture stats activity and when no device is registered
+        if(deviceItemList == null || deviceItemList.size() <= 0){
+//            Log.i(TAG_NAME, "deviceItemList size: " + deviceItemList.size());
+            Button getMoistureStatsButton = (Button) this.findViewById(R.id.button_get_moisture_stats);
+            getMoistureStatsButton.setEnabled(false);
+            portSpinner.setEnabled(false);
+        }
+
+        // when navigate from drawer layout to soil moisture stats activity and when no plants are registered
+        else if(deviceId == null && (deviceItemList != null || deviceItemList.size() > 0)){
+            DeviceItem deviceItem = deviceNameAdapter.getItem(deviceNameSpinner.getSelectedItemPosition());
+            String selecteddeviceId = deviceItem.getDeviceId();
+
+            List<PlantItem> plantItemList;
+            try{
+//                Log.i(TAG_NAME, "selecteddeviceId: " + selecteddeviceId);
+                DDBManager ddbManager = DDBManager.getInstance();
+                plantItemList = ddbManager.listPlants(selecteddeviceId);
+            } catch(DDBManager.PlantListException e){
+                String resultMessage = "Error occurred while fetching the plant list!";
+                Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                return;
+            }
+
+            if(plantItemList == null || plantItemList.size() <= 0){
+//                Log.i(TAG_NAME, "plantItemList size: " + plantItemList.size());
+                Button getMoistureStatsButton = (Button) this.findViewById(R.id.button_get_moisture_stats);
+                getMoistureStatsButton.setEnabled(false);
+                portSpinner.setEnabled(false);
+            }
         }
     }
 

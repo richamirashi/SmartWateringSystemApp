@@ -91,6 +91,10 @@ public class PlantsListActivity extends BaseActivity implements ItemClickListene
         try {
             DDBManager ddbManager = DDBManager.getInstance();
             List<PlantItem> plantItemList = ddbManager.listPlants(deviceId);
+            if(plantItemList.size() >= 2){
+                Button registerButton = (Button) this.findViewById(R.id.button_plant_register);
+                registerButton.setEnabled(false);
+            }
             plantAdapter = new PlantAdapter(plantItemList);
             plantAdapter.setClickListener(this);
             recyclerView.setAdapter(plantAdapter);

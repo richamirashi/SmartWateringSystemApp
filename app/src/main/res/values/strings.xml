@@ -9,8 +9,8 @@
     <string name="link_signup"><u>No account yet? Create one</u></string>
 
     <string-array name="plant_port_array">
-        <item>Plant Port 1</item>
-        <item>Plant Port 2</item>
+        <item>Plant 1</item>
+        <item>Plant 2</item>
     </string-array>
 
     <string-array name="plant_type_array">

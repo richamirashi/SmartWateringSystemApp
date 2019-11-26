@@ -45,7 +45,7 @@
             android:textSize="18sp"
             android:textColor="@color/cardview_light_background"
             app:backgroundTint="@color/colorPrimaryDark"
-            android:text="Register  Device"
+            android:text="Register  Watering  Device"
             android:foreground="?android:attr/selectableItemBackground"/>
 
     </LinearLayout>
