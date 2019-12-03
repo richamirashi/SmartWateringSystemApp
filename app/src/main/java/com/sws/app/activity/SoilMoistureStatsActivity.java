@@ -17,6 +17,7 @@ import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 import com.sws.app.db.model.DeviceItem;
 import com.sws.app.db.model.PlantItem;
+import com.sws.app.db.model.PlantPort;
 import com.sws.app.iot.IotManager;
 
 import java.util.List;
@@ -181,7 +182,9 @@ public class SoilMoistureStatsActivity extends BaseActivity {
         String deviceId = deviceItem.getDeviceId();
 
         Spinner portSpinner = (Spinner) findViewById(R.id.spinner_plant_port);
-        String plantPort = portSpinner.getSelectedItem().toString();
+        String plantPortStr = portSpinner.getSelectedItem().toString();
+        PlantPort plantPort = PlantPort.valueOf(plantPortStr);
+
         String resultMessage;
 
         // make request to device to update soil moisture stat in database
@@ -190,7 +193,7 @@ public class SoilMoistureStatsActivity extends BaseActivity {
             iotManager.requestDeviceForSoilMoistureStat(deviceId, plantPort);
         } catch (Exception e) {
             resultMessage = "Error Getting Moisture Stats !";
-            Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort);
+            Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPortStr);
             e.printStackTrace();
             return;
         }

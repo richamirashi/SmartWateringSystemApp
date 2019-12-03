@@ -1,16 +1,19 @@
 package com.sws.app.db;
 
+import android.util.Log;
+
 import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
 import com.amazonaws.regions.Region;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.sws.app.commons.AWSConfig;
 import com.sws.app.commons.HashUtils;
 import com.sws.app.db.model.DeviceItem;
 import com.sws.app.db.model.PlantItem;
+import com.sws.app.db.model.PlantPort;
+import com.sws.app.db.model.RegistryItem;
 import com.sws.app.db.model.UserItem;
 
 import java.util.List;
@@ -19,6 +22,8 @@ import java.util.List;
  * Class provides functions to access dynamodb database
  */
 public class DDBManager {
+
+    private static final String TAG_NAME = "DDBManager";
 
     private static DDBManager ddbManager;
 
@@ -34,10 +39,7 @@ public class DDBManager {
     }
 
     private DDBManager() {
-        String ACCESS_KEY = "";
-        String SECRET_KEY = "";
-        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
-        AWSCredentialsProvider awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
+        AWSCredentialsProvider awsCredentialsProvider = AWSConfig.getCredentialProvider();
         ddbClient = new AmazonDynamoDBClient(awsCredentialsProvider);
         ddbClient.setRegion(Region.getRegion("us-west-2"));
         ddbMapper = DynamoDBMapper.builder().dynamoDBClient(ddbClient).build();
@@ -115,10 +117,20 @@ public class DDBManager {
             throw new DeviceAlreadyExistsException();
         }
 
+        // check if device is registered by some other user
+        RegistryItem registryItem = new RegistryItem();
+        registryItem.setDeviceId(deviceId);
+        registryItem.setUsername(username);
+
+        if (ddbMapper.load(registryItem) != null) {
+            throw new DeviceAlreadyExistsException();
+        }
+
         // add record to database
         deviceItem.setDeviceName(deviceName);
         try {
             ddbMapper.save(deviceItem);
+            ddbMapper.save(registryItem);
         } catch (Exception e) {
             throw new DeviceCreationException(e);
         }
@@ -159,12 +171,12 @@ public class DDBManager {
     /**
      * Plant registration handler
      */
-    public void registerPlant(String deviceId, String plantPort, String plantName, String plantType, String plantDescription)
+    public void registerPlant(String deviceId, PlantPort plantPort, String plantName, String plantType, String plantDescription)
             throws PlantAlreadyExistsException, PlantCreationException {
         // Construct object
         PlantItem plantItem = new PlantItem();
         plantItem.setDeviceId(deviceId);
-        plantItem.setPlantPort(plantPort);
+        plantItem.setPlantPort(plantPort.name());
 
         // Check if plant exists
         if (ddbMapper.load(plantItem) != null) {
@@ -199,11 +211,11 @@ public class DDBManager {
         return plantsList;
     }
 
-    public PlantItem getPlantItem(String deviceId, String plantPort) throws PlantGetException {
+    public PlantItem getPlantItem(String deviceId, PlantPort plantPort) throws PlantGetException {
         PlantItem plantItemResult;
         PlantItem plantItem = new PlantItem();
         plantItem.setDeviceId(deviceId);
-        plantItem.setPlantPort(plantPort);
+        plantItem.setPlantPort(plantPort.name());
         try {
             plantItemResult = ddbMapper.load(plantItem);
         } catch (Exception e) {
@@ -217,6 +229,18 @@ public class DDBManager {
         return plantItemResult;
     }
 
+
+    public void deletePlantItem(String deviceId, PlantPort plantPort) throws PlantDeleteException {
+        PlantItem plantItem = new PlantItem();
+        plantItem.setDeviceId(deviceId);
+        plantItem.setPlantPort(plantPort.name());
+        try {
+            ddbMapper.delete(plantItem);
+        } catch (Exception e) {
+            Log.e(TAG_NAME, "deletePlantItem caught an exception: " + e.getMessage());
+            throw new PlantDeleteException(e);
+        }
+    }
 
     public class PlantAlreadyExistsException extends Exception {
     }
@@ -249,15 +273,21 @@ public class DDBManager {
         }
     }
 
+    public class PlantDeleteException extends Exception {
+        public PlantDeleteException(Exception e) {
+            super(e);
+        }
+    }
+
     public class PlantDoesNotExistException extends Exception {
     }
 
-    public void setSchedule(String deviceId, String plantPort, String startDateTime, String frequency, String duration)
+    public void setSchedule(String deviceId, PlantPort plantPort, String startDateTime, String frequency, String duration)
         throws PlantUpdateException, PlantDoesNotExistException {
 
         PlantItem plantItem = new PlantItem();
         plantItem.setDeviceId(deviceId);
-        plantItem.setPlantPort(plantPort);
+        plantItem.setPlantPort(plantPort.name());
 
         try {
             // get object from database

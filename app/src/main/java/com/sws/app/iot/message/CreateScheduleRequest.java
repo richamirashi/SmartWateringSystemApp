@@ -1,6 +1,7 @@
 package com.sws.app.iot.message;
 
 import com.google.gson.Gson;
+import com.sws.app.db.model.PlantPort;
 
 public class CreateScheduleRequest extends Request {
 
@@ -8,7 +9,7 @@ public class CreateScheduleRequest extends Request {
     private String scheduledFrequency;
     private String scheduledStartTime;
 
-    public CreateScheduleRequest(String plantPort, String scheduledStartTime, String scheduledFrequency, String scheduledDuration) {
+    public CreateScheduleRequest(PlantPort plantPort, String scheduledStartTime, String scheduledFrequency, String scheduledDuration) {
         super(plantPort);
         this.scheduledDuration = scheduledDuration;
         this.scheduledStartTime = scheduledStartTime;

@@ -21,6 +21,7 @@ import com.sws.app.commons.Utils;
 import com.sws.app.db.DDBManager;
 import com.sws.app.db.model.DeviceItem;
 import com.sws.app.db.model.PlantItem;
+import com.sws.app.db.model.PlantPort;
 import com.sws.app.iot.IotManager;
 
 import java.util.Calendar;
@@ -200,7 +201,9 @@ public class SetScheduleActivity extends BaseActivity {
         String deviceId = deviceItem.getDeviceId();
 
         Spinner portSpinner = (Spinner) findViewById(R.id.spinner_plant_port);
-        String plantPort = portSpinner.getSelectedItem().toString();
+        String plantPortStr = portSpinner.getSelectedItem().toString();
+        PlantPort plantPort = PlantPort.valueOf(plantPortStr);
+
 
         DatePicker datePicker = findViewById(R.id.schedule_date);
         int day = datePicker.getDayOfMonth();
@@ -229,7 +232,7 @@ public class SetScheduleActivity extends BaseActivity {
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
             IotManager iotManager = IotManager.getInstance();
             iotManager.createSchedule(deviceId, plantPort, scheduleStartDateStr, frequency, duration);
-            Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort
+            Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPortStr
                     + "startDateTime=" + scheduleStartDateStr
                     + "duration=" + duration + "frequency=" + frequency);
 

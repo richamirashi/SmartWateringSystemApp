@@ -356,6 +356,19 @@
             android:text="Get  Moisture  Stats"
             android:foreground="?android:attr/selectableItemBackground"/>
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_delete_plant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:textColor="@color/cardview_light_background"
+            app:backgroundTint="@color/colorAccent"
+            android:text="Remove Plant"
+            android:foreground="?android:attr/selectableItemBackground"/>
+
     </LinearLayout>
 
 </ScrollView>

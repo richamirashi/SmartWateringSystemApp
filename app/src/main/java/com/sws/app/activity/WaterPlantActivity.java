@@ -18,6 +18,7 @@ import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 import com.sws.app.db.model.DeviceItem;
 import com.sws.app.db.model.PlantItem;
+import com.sws.app.db.model.PlantPort;
 import com.sws.app.iot.IotManager;
 
 import java.util.ArrayList;
@@ -185,14 +186,15 @@ public class WaterPlantActivity extends BaseActivity {
         String deviceId = deviceItem.getDeviceId();
 
         Spinner portSpinner = (Spinner) findViewById(R.id.spinner_plant_port);
-        String plantPort = portSpinner.getSelectedItem().toString();
+        String plantPortStr = portSpinner.getSelectedItem().toString();
+        PlantPort plantPort = PlantPort.parsePlantPort(plantPortStr);
 
         try {
             // Water plant through AWS IOT
             IotManager iotManager = IotManager.getInstance();
             iotManager.waterPlant(deviceId, plantPort, duration);
             String resultMessage = "Water Plant success !";
-            Log.i(TAG_NAME, resultMessage + " | deviceId=" + deviceId + " |  plantPort=" + plantPort + " | duration=" + duration);
+            Log.i(TAG_NAME, resultMessage + " | deviceId=" + deviceId + " |  plantPort=" + plantPortStr + " | duration=" + duration);
 
             // Select intent based on caller activity/drawer layout
             Session session = Session.fromJson(getIntent().getStringExtra("session"));
@@ -213,7 +215,7 @@ public class WaterPlantActivity extends BaseActivity {
             startNextActivity(TAG_NAME, intent, session);
         } catch (Exception e) {
             String resultMessage = "Error Watering plant !";
-            Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPort + "duration=" + duration);
+            Log.i(TAG_NAME, resultMessage + "deviceId=" + deviceId + " plantPort=" + plantPortStr + "duration=" + duration);
             e.printStackTrace();
         }
     }

@@ -92,7 +92,7 @@ public class DeviceRegistrationActivity extends BaseActivity {
             intent.putExtra("session", session.toJson());
             startActivity(intent);
         } catch (DDBManager.DeviceAlreadyExistsException e) {
-            resultMessage = "Device already exists !";
+            resultMessage = "Device already registered error !";
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             resultMessage = "Error occurred during device registration !";

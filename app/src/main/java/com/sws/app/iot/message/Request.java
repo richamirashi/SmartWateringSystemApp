@@ -1,11 +1,13 @@
 package com.sws.app.iot.message;
 
+import com.sws.app.db.model.PlantPort;
+
 public abstract class Request {
 
     private String plantPort;
 
-    public Request(String plantPort){
-        this.plantPort = plantPort;
+    public Request(PlantPort plantPort){
+        this.plantPort = plantPort.name();
     }
 
     public String getPlantPort() {

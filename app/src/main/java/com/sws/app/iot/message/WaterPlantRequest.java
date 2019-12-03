@@ -1,12 +1,13 @@
 package com.sws.app.iot.message;
 
 import com.google.gson.Gson;
+import com.sws.app.db.model.PlantPort;
 
 public class WaterPlantRequest extends Request {
 
     private String duration;
 
-    public WaterPlantRequest(String plantPort, String duration) {
+    public WaterPlantRequest(PlantPort plantPort, String duration) {
         super(plantPort);
         this.duration = duration;
     }

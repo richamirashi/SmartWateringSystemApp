@@ -1,5 +1,7 @@
 package com.sws.app.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -9,11 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sws.app.R;
 import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
 import com.sws.app.db.model.PlantItem;
+import com.sws.app.db.model.PlantPort;
 
 public class PlantInfoActivity extends BaseActivity {
 
@@ -110,6 +114,54 @@ public class PlantInfoActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+
+        final DialogInterface.OnClickListener deletePlantDialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+
+                        //Yes button clicked
+                        Session session = Session.fromJson(getIntent().getStringExtra("session"));
+                        String deviceId = (session.getPlantItem() == null? null: session.getPlantItem().getDeviceId());
+                        String plantPortStr = (session.getPlantItem() == null ? null : session.getPlantItem().getPlantPort());
+
+                        DDBManager ddbManager = DDBManager.getInstance();
+
+                        // delete plant from database
+                        try {
+                            ddbManager.deletePlantItem(deviceId, PlantPort.valueOf(plantPortStr));
+                        } catch (DDBManager.PlantDeleteException e) {
+                            String resultMessage = "Error occurred while deleting plant!";
+                            Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                            return;
+                        }
+
+                        // go one page back
+                        onBackPressed();
+
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked -> do nothing
+                        break;
+                }
+            }
+        };
+
+        Button deletePlant = (Button) this.findViewById(R.id.button_delete_plant);
+        deletePlant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Log.i(TAG_NAME, "Inside listener function for delete plant button");
+            AlertDialog.Builder builder = new AlertDialog.Builder(PlantInfoActivity.this);
+            builder.setMessage("Are you sure?").setPositiveButton("Yes", deletePlantDialogClickListener)
+                    .setNegativeButton("No", deletePlantDialogClickListener).show();
+
+            }
+        });
     }
 
     @Override
@@ -135,7 +187,9 @@ public class PlantInfoActivity extends BaseActivity {
         try{
             Session session = Session.fromJson(getIntent().getStringExtra("session"));
             String deviceId = session.getDeviceItem().getDeviceId();
-            String plantPort = session.getPlantItem().getPlantPort();
+            String plantPortStr = session.getPlantItem().getPlantPort();
+            PlantPort plantPort = PlantPort.valueOf(plantPortStr);
+
             DDBManager ddbManager = DDBManager.getInstance();
             PlantItem plantItem  = ddbManager.getPlantItem(deviceId, plantPort);
 

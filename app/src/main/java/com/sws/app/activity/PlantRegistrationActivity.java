@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.sws.app.R;
 import com.sws.app.commons.Session;
 import com.sws.app.db.DDBManager;
+import com.sws.app.db.model.PlantPort;
 
 public class PlantRegistrationActivity extends BaseActivity {
 
@@ -91,13 +92,14 @@ public class PlantRegistrationActivity extends BaseActivity {
         String plantDescription = ((EditText) findViewById(R.id.text_plant_description)).getText().toString();
 
         Spinner portSpinner = (Spinner) findViewById(R.id.spinner_plant_port);
-        String plantPort = portSpinner.getSelectedItem().toString();
+        String plantPortStr = portSpinner.getSelectedItem().toString();
+        PlantPort plantPort = PlantPort.parsePlantPort(plantPortStr);
 
         Spinner plantTypeSpinner = (Spinner) findViewById(R.id.spinner_plant_type);
         String plantType = plantTypeSpinner.getSelectedItem().toString();
 
         Log.i(TAG_NAME, "plantName=" + plantName + " | plantDescription=" + plantDescription);
-        Log.i(TAG_NAME, "plantPort=" + plantPort + " | plantType=" + plantType);
+        Log.i(TAG_NAME, "plantPort=" + plantPortStr + " | plantType=" + plantType);
 
         try {
             DDBManager ddbManager = DDBManager.getInstance();

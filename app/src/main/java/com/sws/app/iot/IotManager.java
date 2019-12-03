@@ -8,6 +8,8 @@ import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttClientStatusCallback;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttManager;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttQos;
+import com.sws.app.commons.AWSConfig;
+import com.sws.app.db.model.PlantPort;
 import com.sws.app.iot.message.CreateScheduleRequest;
 import com.sws.app.iot.message.GetSoilMoistureStatsRequest;
 import com.sws.app.iot.message.WaterPlantRequest;
@@ -28,8 +30,6 @@ public class IotManager {
 
     private static final String LOG_TAG = "IotManager";
 
-    private static final String END_POINT = "";
-
     private static final String clientId = "waterPlantApp";
 
     public static IotManager getInstance() {
@@ -40,11 +40,8 @@ public class IotManager {
     }
 
     private IotManager(){
-        String ACCESS_KEY = "";
-        String SECRET_KEY = "";
-        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
-        AWSCredentialsProvider awsCredentialsProvider = new StaticCredentialsProvider(awsCredentials);
-        mqttManager = new AWSIotMqttManager(clientId, END_POINT);
+        AWSCredentialsProvider awsCredentialsProvider = AWSConfig.getCredentialProvider();
+        mqttManager = new AWSIotMqttManager(clientId, AWSConfig.IOT_END_POINT);
         mqttManager.setKeepAlive(10);
 
         try {
@@ -71,7 +68,7 @@ public class IotManager {
 
     }
 
-    public void waterPlant(String deviceId, String plantPort, String duration) {
+    public void waterPlant(String deviceId, PlantPort plantPort, String duration) {
 
         Log.i(LOG_TAG, "Water plant function called");
 
@@ -84,7 +81,7 @@ public class IotManager {
 
     }
 
-    public void createSchedule(String deviceId, String plantPort, String startDateTime, String frequency, String duration) {
+    public void createSchedule(String deviceId, PlantPort plantPort, String startDateTime, String frequency, String duration) {
 
         Log.i(LOG_TAG, "Water plant function called");
 
@@ -97,7 +94,7 @@ public class IotManager {
 
     }
 
-    public void requestDeviceForSoilMoistureStat(String deviceId, String plantPort) {
+    public void requestDeviceForSoilMoistureStat(String deviceId, PlantPort plantPort) {
 
         Log.i(LOG_TAG, "Request device for soil moisture stat");
 

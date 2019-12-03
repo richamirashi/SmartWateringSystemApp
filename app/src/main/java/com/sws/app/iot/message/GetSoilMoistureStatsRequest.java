@@ -1,10 +1,11 @@
 package com.sws.app.iot.message;
 
 import com.google.gson.Gson;
+import com.sws.app.db.model.PlantPort;
 
 public class GetSoilMoistureStatsRequest extends Request {
 
-    public GetSoilMoistureStatsRequest(String plantPort) {
+    public GetSoilMoistureStatsRequest(PlantPort plantPort) {
         super(plantPort);
     }
 
